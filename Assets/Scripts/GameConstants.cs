@@ -25,6 +25,7 @@
     public enum GameOptions
     {
         NONE = 0,
+        OPTION_1x1,
         OPTION_2x2,
         OPTION_3x3,
         OPTION_4x4,
