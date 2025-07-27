@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
 
         EventManager<GameStateModel>.StartListening(GameEvents.ON_SHOW_VIEW, OnShowView);
         EventManager<GameOptionsModel>.StartListening(GameEvents.ON_OPTION_SELECTED, OnShowView);
-        EventManager.StartListening(GameEvents.ON_BOARD_COMPLETE, OnBoardComplete);
+        EventManager<BoardCompleteModel>.StartListening(GameEvents.ON_BOARD_COMPLETE, OnBoardComplete);
     }
 
     private void OnShowView(GameStateModel model)
@@ -129,8 +129,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnBoardComplete()
+    private void OnBoardComplete(BoardCompleteModel model)
     {
+
         OnShowView(new GameStateModel() { GameState = GameConstants.GameState.GameOver });
+        _currentUiComponent.init(model);
     }
 }

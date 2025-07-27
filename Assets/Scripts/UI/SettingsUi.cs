@@ -5,17 +5,9 @@ namespace Assets.Scripts.UI
 {
     public class SettingsUi : BaseUi
     {
-
-        // Use this for initialization
-        void Start()
+        public override void init<T>(T model)
         {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            throw new System.NotImplementedException();
         }
     }
 }

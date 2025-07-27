@@ -42,5 +42,10 @@ namespace Assets.Scripts.UI
                 }
             }
         }
+
+        public override void init<T>(T model)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -29,5 +29,9 @@ namespace Assets.Scripts.UI
             userClickCountText.text = $"Clicks : {userClickCount}";
         }
 
+        public override void init<T>(T model)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

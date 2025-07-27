@@ -28,5 +28,10 @@ namespace Assets.Scripts.UI
             Debug.Log("Settings Button Clicked");
             EventManager<GameStateModel>.TriggerEvent(GameEvents.ON_SHOW_VIEW, new GameStateModel { GameState = GameConstants.GameState.Settings });
         }
+
+        public override void init<T>(T model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

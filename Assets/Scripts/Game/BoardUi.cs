@@ -1,4 +1,5 @@
 using Assets.Scripts;
+using Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ public class BoardUi : MonoBehaviour
 
     public event Action<int, int> OnScoreUpdate;
 
-    private List<BoardItemUi> items = new List<BoardItemUi>();
+    private List<BoardItemUi> _items = new List<BoardItemUi>();
     private List<int> _collectedIds = new List<int>();
     private List<int> _allIdsCollectedList = new List<int>();
     private List<BoardItemUi> _last2ItemsList = new List<BoardItemUi>();
@@ -31,12 +32,12 @@ public class BoardUi : MonoBehaviour
 
     private void OnDisable()
     {
-        DestroyItems();
+        ResetItems();
     }
 
     private void CreateBoard()
     {
-        DestroyItems();
+        ResetItems();
         int rows = gridLayOutGroup.constraintCount = (int)GameManager.Instance.CurrentGameOptions;
         _totalItems = rows * rows;
         BoardItemUi item;
@@ -52,7 +53,7 @@ public class BoardUi : MonoBehaviour
                 id = matrix[row, col];
                 item = Instantiate(boardItem, boardItemCont) as BoardItemUi;
                 item.SetData(index, id, GameManager.Instance.GameAssets.GetItemSprite(id));
-                items.Add(item);
+                _items.Add(item);
                 item.OnItemClick += OnItemClick;
                 index++;
             }
@@ -84,13 +85,14 @@ public class BoardUi : MonoBehaviour
             {   
                 if (isMatched)
                 {
-                    _last2ItemsList[i].ShowHideAnim(0.2f, null);
+                    _last2ItemsList[i].ShowHideAnim(0.5f, null);
                 }
                 else
                 {
                     _last2ItemsList[i].ResetItem();
                     _last2ItemsList[i].OnItemClick += OnItemClick;
                     _allIdsCollectedList.Remove(_last2ItemsList[i].ItemIndex);
+                    _collectedIds.Remove(_last2ItemsList[i].ItemId);
                 }
             }
 
@@ -100,20 +102,35 @@ public class BoardUi : MonoBehaviour
         OnScoreUpdate?.Invoke(_collectedCount, _totalClicks);
 
         if (_allIdsCollectedList.Count == _totalItems)
-            EventManager.TriggerEvent(GameEvents.ON_BOARD_COMPLETE);
+        {
+            BoardItemUi.IsBoardItemAnimationPlaying = true;
+            StartCoroutine(TriggerBOardCOmplete());
+        }
     }
 
-    private void DestroyItems()
+    private IEnumerator TriggerBOardCOmplete()
     {
-        for (int i = 0; i < items.Count; i++)
+        yield return new WaitForSeconds(1.0f);
+        EventManager<BoardCompleteModel>.TriggerEvent(GameEvents.ON_BOARD_COMPLETE, new BoardCompleteModel()
         {
-            Destroy(items[i].gameObject);
+            CollectedScore = _collectedCount,
+            ClicksScore = _totalClicks
+        });
+    }
+
+    private void ResetItems()
+    {
+        for (int i = 0; i < _items.Count; i++)
+        {
+            Destroy(_items[i].gameObject);
         }
 
-        items.Clear();
+        _items.Clear();
         _allIdsCollectedList.Clear();
         _totalItems = 0;
         _collectedCount = 0;
         _totalClicks = 0;
+
+        BoardItemUi.IsBoardItemAnimationPlaying = false;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Model;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -16,6 +17,8 @@ namespace Assets.Scripts
         {
             gameObject.SetActive(visibility);
         }
+
+        public abstract void init<T>(T model) where T : BaseModel;
 
         public virtual void Show()
         {
