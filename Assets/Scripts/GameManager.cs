@@ -14,8 +14,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private List<BaseUi> gameUi;
     [SerializeField] private Button backBtn;
+    [SerializeField] private GameAssets assets;
 
     public GameOptions CurrentGameOptions => _currentSelectedGameOption;
+    public GameAssets GameAssets => assets;
 
     private GameConstants.GameState _currentGameState = GameConstants.GameState.MainMenu;
     private BaseUi _currentUiComponent;
@@ -70,6 +72,7 @@ public class GameManager : MonoBehaviour
 
         EventManager<GameStateModel>.StartListening(GameEvents.ON_SHOW_VIEW, OnShowView);
         EventManager<GameOptionsModel>.StartListening(GameEvents.ON_OPTION_SELECTED, OnShowView);
+        EventManager.StartListening(GameEvents.ON_BOARD_COMPLETE, OnBoardComplete);
     }
 
     private void OnShowView(GameStateModel model)
@@ -124,5 +127,10 @@ public class GameManager : MonoBehaviour
         {
             backBtn.gameObject.SetActive(true);
         }
+    }
+
+    private void OnBoardComplete()
+    {
+        OnShowView(new GameStateModel() { GameState = GameConstants.GameState.GameOver });
     }
 }

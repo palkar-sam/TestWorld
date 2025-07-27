@@ -8,7 +8,8 @@
             MainMenu,
             Options,
             Settings,
-            Game
+            Game,
+            GameOver
         }
     }
 
@@ -16,7 +17,7 @@
     {
         NONE = 0,
         ON_ROUND_STARTED,
-        ON_ROUND_COMPLETE,
+        ON_BOARD_COMPLETE,
         ON_SHOW_VIEW,
         ON_HIDE_VIEW,
         ON_OPTION_SELECTED

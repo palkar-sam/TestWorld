@@ -25,13 +25,19 @@ public class AnimationController : MonoBehaviour
 
     private void Update()
     {
-        if (animator == null || animator.runtimeAnimatorController == null || !_gameObject.activeInHierarchy) return;
+        
+        if (animator == null || animator.runtimeAnimatorController == null || !_gameObject.activeInHierarchy)
+        {
+            Debug.Log("Animator is null");
+            return;
+        }
 
+        
         // Get current state information
         var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-
+        Debug.Log($"_isAnimationPlaying : {_isAnimationPlaying} : stateInfo.length {stateInfo.length} : stateInfo.normalizedTime {stateInfo.normalizedTime}");
         // Check if an animation is playing
-        if (stateInfo.length > 0 && stateInfo.normalizedTime < 1f)
+        if (stateInfo.length > 0 && stateInfo.normalizedTime < stateInfo.length)
         {
             string animationName = stateInfo.shortNameHash.ToString();
 
@@ -49,6 +55,7 @@ public class AnimationController : MonoBehaviour
         else if (_isAnimationPlaying)
         {
             // Trigger complete callback when animation ends
+            Debug.Log("CurrentStateComplete : "+ _currentAnimation);
             OnAnimationCompleted?.Invoke(_currentAnimation);
             _isAnimationPlaying = false;
             _currentAnimation = null;
@@ -69,8 +76,10 @@ public class AnimationController : MonoBehaviour
         if (animator == null) return;
 
         this.enabled = true;
+        OnAnimationCompleted = null;
         OnAnimationCompleted = onAnimationCompleteCallback;
-        animator.Play(animationName);
+        animator.Play(animationName, 0, 0.0f);
+        animator.Update(0.0f);
     }
 
     public void SetAnimator(Animator targetAnimator)
