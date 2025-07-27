@@ -83,6 +83,8 @@ public class BoardItemUi : MonoBehaviour, IPointerDownHandler
             itemImage.gameObject.SetActive(isShowItemImage);
         });
 
+        SoundManager.Instance.PlaySFX(GameManager.Instance.GameAssets.GetSoundClip(SoundIds.FLIP_SFX));
+
         yield return new WaitForSeconds(0.5f);
 
         ShowAnimation(() => {

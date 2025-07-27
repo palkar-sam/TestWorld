@@ -27,3 +27,10 @@ MonoBehaviour:
     itemImage: {fileID: 21300000, guid: 50dd2e8acaa7426438d693e39eb73026, type: 3}
   - id: 6
     itemImage: {fileID: 21300000, guid: 140169fe467b8b649aa2541e0c8d6c09, type: 3}
+  _sounds:
+  - id: 0
+    clip: {fileID: 8300000, guid: d9674b1d807ba9745a100b707b5b266d, type: 3}
+  - id: 1
+    clip: {fileID: 8300000, guid: 05e183ef9ec6b55438ab45ab1357f1df, type: 3}
+  - id: 2
+    clip: {fileID: 8300000, guid: daf81f93c289ee741896a0512a908f38, type: 3}

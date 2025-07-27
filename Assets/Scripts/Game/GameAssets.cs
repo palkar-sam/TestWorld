@@ -7,6 +7,7 @@ using UnityEngine;
 public class GameAssets : ScriptableObject
 {
     [SerializeField] private List<GameItems> _items;
+    [SerializeField] private List<GameSounds> _sounds;
 
     public List<GameItems> ItemsAssets => _items;
 
@@ -14,6 +15,12 @@ public class GameAssets : ScriptableObject
     {
         Sprite sprite = _items.Find(item => item.Id == id).ItemImage;
         return sprite;
+    }
+
+    public AudioClip GetSoundClip(SoundIds id)
+    {
+        AudioClip clip = _sounds.Find(item => item.SoundIds == id).SoundClip;
+        return clip;
     }
 }
 
@@ -26,4 +33,21 @@ public class GameItems
 
     public int Id => id;
     public Sprite ItemImage => itemImage;
+}
+
+[Serializable]
+public class GameSounds
+{
+    [SerializeField] private SoundIds id;
+    [SerializeField] private AudioClip clip;
+
+    public SoundIds SoundIds => id;
+    public AudioClip SoundClip => clip;
+}
+
+public enum SoundIds
+{
+    MUSIC,
+    FLIP_SFX,
+    COLLECT_SFS
 }

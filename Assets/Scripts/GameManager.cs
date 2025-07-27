@@ -73,6 +73,8 @@ public class GameManager : MonoBehaviour
         EventManager<GameStateModel>.StartListening(GameEvents.ON_SHOW_VIEW, OnShowView);
         EventManager<GameOptionsModel>.StartListening(GameEvents.ON_OPTION_SELECTED, OnShowView);
         EventManager<BoardCompleteModel>.StartListening(GameEvents.ON_BOARD_COMPLETE, OnBoardComplete);
+
+        SoundManager.Instance.PlayMusic(GameManager.Instance.GameAssets.GetSoundClip(SoundIds.MUSIC));
     }
 
     private void OnShowView(GameStateModel model)
