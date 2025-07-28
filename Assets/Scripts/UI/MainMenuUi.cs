@@ -10,11 +10,13 @@ namespace Assets.Scripts.UI
     {
         [SerializeField] private Button startNewBtn;
         [SerializeField] private Button settingsBtn;
+        [SerializeField] private Button resumeBtn;
 
         private void Start()
         {
             startNewBtn.onClick.AddListener(OnStartNewGame);
             settingsBtn.onClick.AddListener(OnSettings);
+            resumeBtn.onClick.AddListener(OnResume);
         }
 
         private void OnStartNewGame()
@@ -29,6 +31,11 @@ namespace Assets.Scripts.UI
             EventManager<GameStateModel>.TriggerEvent(GameEvents.ON_SHOW_VIEW, new GameStateModel { GameState = GameConstants.GameState.Settings });
         }
 
+        private void OnResume()
+        {
+            Debug.Log("Resume Button Clicked");
+            EventManager<GameStateModel>.TriggerEvent(GameEvents.ON_SHOW_VIEW, new GameStateModel { GameState = GameConstants.GameState.Game });
+        }
         public override void init<T>(T model)
         {
             throw new NotImplementedException();
